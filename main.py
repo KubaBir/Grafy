@@ -26,6 +26,16 @@ def lista_nastepnikow(sasiedztwo, n):
     return nastepnicy
 
 
+def sprawdzanie_spojnosci(sasiedztwo, n):
+    for index in range(1, n):
+        connected = False
+        for row in sasiedztwo:
+            if row[index] == 1:
+                connected = True
+        if not connected:
+            sasiedztwo[0][index] = 1
+
+
 def tabela_krawedzi(nastepnicy):
     krawedzie = []
     for index, element in enumerate(nastepnicy):
@@ -202,6 +212,9 @@ def main():
     else:
         sasiedztwo = macierz_z_klawiatury(n)
     print("Macierz sasiedztwa:", *sasiedztwo, sep='\n ')
+    sprawdzanie_spojnosci(sasiedztwo, n)
+    print("Macierz sasiedztwa:", *sasiedztwo, sep='\n ')
+    input()
     nastepnicy = lista_nastepnikow(sasiedztwo, n)  # Lista nastepnikow
     print("Lista nastepnikow:\n", *nastepnicy)
     krawedzie = tabela_krawedzi(nastepnicy)  # Tabela krawedzi
@@ -231,10 +244,6 @@ def main():
             if temp == "3":
                 print(topological_dfs(krawedzie, n, 3))
         input()
-    #print(topological_bfs_krawedzie(krawedzie, n))
-    #print(topological_bfs_nastepnicy(nastepnicy, n))
-    #print(topological_bfs_sasiedztwo(sasiedztwo, n))
-    print(topological_dfs(sasiedztwo, n, 1))
 
 
 if __name__ == '__main__':
