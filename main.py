@@ -36,8 +36,11 @@ def tabela_krawedzi(nastepnicy):
 
 def macierz_z_klawiatury(n):
     sasiedztwo = []
-    for i in range(n):
-        sasiedztwo.append(list(map(int, input().split())))
+    while len(sasiedztwo) < n:
+        try:
+            sasiedztwo.append(list(map(int, input().split())))
+        except ValueError:
+            print("Podaj wartosci calkowitoliczbowe")
     return sasiedztwo
 
 
@@ -46,7 +49,7 @@ def bfs(graph, n):
     queue = []
     res = []
     for i in range(n):
-        if graph[i] != []:
+        if graph[i] != [] and visited[i] == False:
             start_index = i
             break
 
@@ -147,7 +150,7 @@ def topological_bfs_sasiedztwo(graph, n):
     return res
 
 
-# 1: Sasiedztwo 2: Nastepnicy 3: Sasiedztwo
+# 1: Sasiedztwo 2: Nastepnicy 3: krawedzie
 def topological_dfs(graph, n, mode):
     visited = [False] * n
     stack = []
@@ -198,12 +201,36 @@ def main():
         sasiedztwo = macierz_sasiedztwa(n)  # Macierz sasiedztwa
     else:
         sasiedztwo = macierz_z_klawiatury(n)
-    print("Macierz sasiedztwa:", *sasiedztwo, sep='\n')
+    print("Macierz sasiedztwa:", *sasiedztwo, sep='\n ')
     nastepnicy = lista_nastepnikow(sasiedztwo, n)  # Lista nastepnikow
     print("Lista nastepnikow:\n", *nastepnicy)
     krawedzie = tabela_krawedzi(nastepnicy)  # Tabela krawedzi
     print("Tabela krawedzi:\n", *krawedzie)
 
+    while (inp := input("\n1. BFS\n2. DFS\n3. Sortowanie topologiczne BFS\n4. Sortowanie topologiczne DFS\nWybor = ")) != ("q" or "0"):
+        if inp == "1":
+            print(bfs(nastepnicy, n))
+        if inp == "2":
+            print(dfs(nastepnicy, n))
+        if inp == "3":
+            temp = input(
+                "1. Lista sasiedztwa\n2. Lista nastepnikow\n3. Tablica krawedzi\nWybor = ")
+            if temp == "1":
+                print(topological_bfs_sasiedztwo(sasiedztwo, n))
+            if temp == "2":
+                print(topological_bfs_nastepnicy(nastepnicy, n))
+            if temp == "3":
+                print(topological_bfs_krawedzie(krawedzie, n))
+        if inp == "4":
+            temp = input(
+                "1. Lista sasiedztwa\n2. Lista nastepnikow\n3. Tablica krawedzi\nWybor = ")
+            if temp == "1":
+                print(topological_dfs(sasiedztwo, n, 1))
+            if temp == "2":
+                print(topological_dfs(nastepnicy, n, 2))
+            if temp == "3":
+                print(topological_dfs(krawedzie, n, 3))
+        input()
     #print(topological_bfs_krawedzie(krawedzie, n))
     #print(topological_bfs_nastepnicy(nastepnicy, n))
     #print(topological_bfs_sasiedztwo(sasiedztwo, n))
