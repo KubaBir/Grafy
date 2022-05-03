@@ -211,10 +211,8 @@ def main():
         sasiedztwo = macierz_sasiedztwa(n)  # Macierz sasiedztwa
     else:
         sasiedztwo = macierz_z_klawiatury(n)
-    print("Macierz sasiedztwa:", *sasiedztwo, sep='\n ')
     sprawdzanie_spojnosci(sasiedztwo, n)
     print("Macierz sasiedztwa:", *sasiedztwo, sep='\n ')
-    input()
     nastepnicy = lista_nastepnikow(sasiedztwo, n)  # Lista nastepnikow
     print("Lista nastepnikow:\n", *nastepnicy)
     krawedzie = tabela_krawedzi(nastepnicy)  # Tabela krawedzi
